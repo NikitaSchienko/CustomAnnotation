@@ -9,26 +9,26 @@ import java.lang.reflect.Field;
 
 class AnnotationsHandler {
 
-    private BaseHandler createChain(String value) {
-        BaseHandler stringHandler = new StringHandler(String.class, value);
-        BaseHandler integerHandler = stringHandler.setNext(new IntegerHandler(Integer.class, value));
-        BaseHandler doubleHandler = integerHandler.setNext(new DoubleHandler(Double.class, value));
-        BaseHandler longHandler = doubleHandler.setNext(new LongHandler(Long.class, value));
-        BaseHandler integerPromitiveHandler = longHandler.setNext(new IntegerHandler(Integer.TYPE, value));
-        BaseHandler longPrimitiveHandler = integerPromitiveHandler.setNext(new LongHandler(Long.TYPE, value));
-        BaseHandler doublePrimitiveHandler = longPrimitiveHandler.setNext(new DoubleHandler(Double.TYPE, value));
+    private BaseHandler createChain() {
+        BaseHandler stringHandler = new StringHandler(String.class);
+        BaseHandler integerHandler = stringHandler.setNext(new IntegerHandler(Integer.class));
+        BaseHandler doubleHandler = integerHandler.setNext(new DoubleHandler(Double.class));
+        BaseHandler longHandler = doubleHandler.setNext(new LongHandler(Long.class));
+        BaseHandler integerPromitiveHandler = longHandler.setNext(new IntegerHandler(Integer.TYPE));
+        BaseHandler longPrimitiveHandler = integerPromitiveHandler.setNext(new LongHandler(Long.TYPE));
+        BaseHandler doublePrimitiveHandler = longPrimitiveHandler.setNext(new DoubleHandler(Double.TYPE));
         return stringHandler;
     }
 
     void execute(Entity entity) throws IllegalAccessException {
-         Field[] fields = entity.getClass().getDeclaredFields();
+        BaseHandler baseHandler = createChain();
+        Field[] fields = entity.getClass().getDeclaredFields();
         for (Field field : fields) {
             if (field.isAnnotationPresent(Setting.class)) {
                 Setting setting = field.getAnnotation(Setting.class);
                 String value = setting.value();
-                BaseHandler baseHandler = createChain(value);
                 field.setAccessible(true);
-                field.set(entity, baseHandler.castSelection(field.getType()));
+                field.set(entity, baseHandler.castSelection(field.getType(),value));
             }
         }
     }

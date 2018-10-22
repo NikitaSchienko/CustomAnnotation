@@ -11,15 +11,15 @@ public abstract class BaseHandler {
         return next;
     }
 
-    public Object castSelection(Class c) {
+    public Object castSelection(Class c, String value) {
         if(c.equals(currentClass)){
-            return cast();
+            return cast(value);
         }else if (next != null) {
-            return next.castSelection(c);
+            return next.castSelection(c, value);
         }else {
             throw new ClassCastException("The field must be a string or a number");
         }
     }
 
-    abstract protected Object cast();
+    abstract protected Object cast(String v);
 }

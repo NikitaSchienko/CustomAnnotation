@@ -4,12 +4,11 @@ import chainOfResponsibility.BaseHandler;
 
 public class StringHandler extends BaseHandler {
 
-    public StringHandler(Class currentClass, String value) {
+    public StringHandler(Class currentClass) {
         this.currentClass = currentClass;
-        this.value = value;
     }
 
-    protected String cast() {
+    protected String cast(String value) {
         //System.out.printf("%s This is String\n", value);
         return String.valueOf(value);
     }

@@ -4,13 +4,11 @@ import chainOfResponsibility.BaseHandler;
 
 public class IntegerHandler extends BaseHandler {
 
-    public IntegerHandler(Class currentClass, String value) {
+    public IntegerHandler(Class currentClass) {
         this.currentClass = currentClass;
-        this.value = value;
     }
 
-
-    public Integer cast(){
+    public Integer cast(String value){
         //System.out.printf("%s This is Integer\n",value);
         return Integer.valueOf(value);
     }

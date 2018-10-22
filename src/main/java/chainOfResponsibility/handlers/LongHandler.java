@@ -4,13 +4,12 @@ import chainOfResponsibility.BaseHandler;
 
 public class LongHandler extends BaseHandler {
 
-    public LongHandler(Class currentClass, String value) {
+    public LongHandler(Class currentClass ) {
         this.currentClass = currentClass;
-        this.value = value;
     }
 
     @Override
-    protected Long cast() {
+    protected Long cast(String value) {
         //System.out.printf("%s This is Long\n", value);
         return Long.valueOf(value);
     }

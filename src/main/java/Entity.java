@@ -1,3 +1,7 @@
+import javax.annotation.Resource;
+import javax.jws.WebParam;
+import javax.xml.ws.soap.Addressing;
+
 public class Entity {
 
     @Setting("Thomas")
